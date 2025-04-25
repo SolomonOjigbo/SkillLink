@@ -1,6 +1,6 @@
 # SkillLink App
 
-This app was bootstrap with daisyUI template
+This app was bootstrap with daisyUI Starter Kit
 
 ## ✨ Fast prototyping
 

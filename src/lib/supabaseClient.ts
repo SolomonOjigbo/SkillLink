@@ -1,44 +1,40 @@
-import { createClient, SupabaseClient } from '@supabase/supabase-js';
+/* eslint-disable @typescript-eslint/no-explicit-any */
+import { createClient } from '@supabase/supabase-js';
+import { PostgrestError } from '@supabase/supabase-js';
+import { Database } from '../types/database';
 
-// Define the Supabase configuration interface
-interface SupabaseConfig {
-  url: string;
-  anonKey: string;
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+// Validate environment variables
+if (!supabaseUrl || !supabaseAnonKey) {
+  throw new Error(
+    'Missing Supabase environment variables. Check your .env file'
+  );
 }
 
-// Function to get Supabase configuration from environment variables
-const getConfig = (): SupabaseConfig => {
-  const url = import.meta.env.VITE_SUPABASE_URL;
-  const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+// Create typed client
+export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey);
 
-  if (!url || !anonKey) {
-    throw new Error(
-      'Supabase environment variables not set. Please check your .env file'
-    );
-  }
+// Helper type for queries
+export type Table<T extends keyof Database['public']['Tables']> =
+  Database['public']['Tables'][T]['Row'];
 
-  return {
-    url,
-    anonKey
-  };
-};
-
-const config = getConfig();
-export const supabase: SupabaseClient = createClient(
-  config.url,
-  config.anonKey
-);
-
-// Helper type for standardized responses
-export type SupabaseResponse<T> = {
-  data: T | null;
-  error: Error | null;
-};
-
-// Typed wrapper for Supabase operations
-export async function supabaseQuery<T>(
-  query: Promise<{ data: T | null; error: Error | null }>
-): Promise<SupabaseResponse<T>> {
-  const { data, error } = await query;
-  return { data, error };
+// Helper function for typed selects
+export async function typedSelect<T extends keyof Database['public']['Tables']>(
+  table: T,
+  columns = '*'
+) {
+  return supabase.from(table).select(columns).returns<Table<T>[]>();
 }
+
+export const handleSupabaseResponse = ({
+  data,
+  error
+}: {
+  data: any;
+  error: PostgrestError | null;
+}) => {
+  if (error) throw new Error(error.message);
+  return data;
+};
