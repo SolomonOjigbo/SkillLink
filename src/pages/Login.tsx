@@ -38,7 +38,7 @@ const Login: React.FC = () => {
 
    return (
      <div className=" flex flex-col items-center justify-center text-center align-middle">
-       <div className="card my-8 flex w-1/3 flex-col justify-center bg-white p-10">
+       <div className="card my-8 flex flex-col justify-center bg-white p-10 sm:w-full lg:w-1/3">
          {error && (
            <div className="mb-4 rounded bg-red-100 p-2 text-red-700">
              Error: {error.message}
