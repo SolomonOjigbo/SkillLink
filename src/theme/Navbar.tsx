@@ -87,7 +87,7 @@ export const Navbar = (
     </div>
     <div className="navbar-center">
       <a href="./" className="btn btn-ghost text-xl normal-case">
-        daisyUI react
+        SkillLink App
       </a>
     </div>
     <div className="navbar-end">

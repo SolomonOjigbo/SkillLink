@@ -1,12 +1,13 @@
 # SkillLink App
 
-This app was bootstrap with daisyUI Starter Kit
+
+This app was bootstrap from daisyUI Starter Kit
 
 ## ✨ Fast prototyping
 
 See the [official docs](https://daisyui.com/docs/themes/) for a complete list of customisations.
 
-## 🌼 Features
+## 🌼 Tech stack
 
 - React 18 with TypeScript
 - Vite + SWC
@@ -15,3 +16,5 @@ See the [official docs](https://daisyui.com/docs/themes/) for a complete list of
 - Prettier and ESLint
 - Yarn
 - React Query and more...
+
+##

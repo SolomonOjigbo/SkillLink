@@ -9,7 +9,6 @@ export type TableRow<T extends TableName> = Tables[T]['Row'];
 export type InsertDto<T extends TableName> = Tables[T]['Insert'];
 export type UpdateDto<T extends TableName> = Tables[T]['Update'];
 
-// Enhanced response handler with proper typing
 export function handleSupabaseResponse<T>({
   data,
   error
