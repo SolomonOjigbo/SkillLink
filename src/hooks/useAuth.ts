@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { supabase } from '../lib/supabaseClient';
 import { AuthError, Session, User } from '@supabase/supabase-js';
@@ -11,7 +10,10 @@ type AuthCredentials = {
 
 type SignUpCredentials = AuthCredentials & {
   options?: {
-    data?: Record<string, any>;
+    data?: {
+      full_name?: string;
+      username?: string;
+    };
     redirectTo?: string;
   };
 };
