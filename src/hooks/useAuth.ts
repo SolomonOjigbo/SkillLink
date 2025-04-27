@@ -110,6 +110,7 @@ export function useLogout() {
     onSuccess: () => {
       queryClient.removeQueries({ queryKey: ['auth'] });
       queryClient.resetQueries({ queryKey: ['auth'] });
+      window.location.replace('/');
     }
   });
 }

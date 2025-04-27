@@ -23,8 +23,9 @@ export default function UserProfile() {
       <div className="mb-8 flex flex-col items-center">
         <Avatar
           url={profile.avatar_url}
-          size={100}
+          size={250}
           storageBucket="avatars"
+          userId={userId}
           onUpload={() => {}} // No upload for other users
         />
         <h2 className="mt-4 text-xl font-semibold">{profile.full_name}</h2>
@@ -34,13 +35,13 @@ export default function UserProfile() {
       {/* Read-only Profile Info */}
       <div className="space-y-4">
         <div>
-          <h3 className="font-semibold">About</h3>
-          <p className="text-gray-700">{profile.bio || 'No bio yet'}</p>
+          <h3 className="text-2xl font-semibold text-white">About</h3>
+          <p className="text-gray-200">{profile.bio || 'No bio yet'}</p>
         </div>
 
         <div>
-          <h3 className="font-semibold">Skills</h3>
-          <p className="text-gray-700">
+          <h3 className="text-2xl font-semibold">Skills</h3>
+          <p className="text-gray-200">
             {profile.skills || 'No skills listed'}
           </p>
         </div>

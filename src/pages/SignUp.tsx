@@ -10,6 +10,7 @@ const SignUp: React.FC = () => {
     password: ''
   });
   const { mutate: signUp, status, error } = useSignup();
+  const [success, setSuccess] = useState(false);
   const isLoading = status === 'pending';
   const { data: session } = useSession();
   const navigate = useNavigate();
@@ -27,7 +28,7 @@ const SignUp: React.FC = () => {
     if (!formData.email || !formData.password || !formData.username) {
       return;
     }
-
+    setSuccess(false);
     signUp(
       {
         email: formData.email,
@@ -49,6 +50,7 @@ const SignUp: React.FC = () => {
             password: ''
           });
           // Show success message but don't redirect yet
+          setSuccess(true);
         }
       }
     );
@@ -61,6 +63,16 @@ const SignUp: React.FC = () => {
   return (
     <div className=" flex flex-col items-center justify-center text-center align-middle">
       <div className="card my-8 flex w-1/3 flex-col justify-center bg-white p-10">
+        {error && (
+          <div className="mb-4 rounded bg-red-100 p-2 text-red-700">
+            Error: {error}
+          </div>
+        )}
+        {success && (
+          <div className="mb-4 rounded bg-green-100 p-2 text-green-700">
+            Login successful!
+          </div>
+        )}
         <form onSubmit={handleSubmit}>
           <h3 className="my-3 text-3xl text-black">SignUp to SkillLink</h3>
           <div className="flex w-full flex-grow flex-col justify-center gap-5 align-middle">

@@ -96,6 +96,7 @@ const AddPost = () => {
             url={formData.image_url}
             size={100}
             storageBucket="skill-images"
+            userId={authUser?.id || ''}
             onUpload={(filepath) => {
               setFormData({ ...formData, image_url: filepath });
             }}

@@ -1,8 +1,8 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from 'react';
-import { typedSelect } from '../types/supabase.helpers';
+// import { typedSelect } from '../types/supabase.helpers';
 // import { typedSelect } from '../lib/supabaseClient';
-// import { supabaseHelpers } from '../types/supabase.helpers';
+import { supabase } from '../lib/supabaseClient';
 
 export function useUserSkills(userId: string) {
   const [skills, setSkills] = useState<any[]>([]);
@@ -13,7 +13,9 @@ export function useUserSkills(userId: string) {
     const fetchSkills = async () => {
       try {
         setIsLoading(true);
-        const { data, error } = await typedSelect('skills')
+        const { data, error } = await supabase
+          .from('skills')
+          .select('*')
           .eq('user_id', userId)
           .order('created_at', { ascending: false });
 

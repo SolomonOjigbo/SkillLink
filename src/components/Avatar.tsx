@@ -1,20 +1,24 @@
 import { useState } from 'react';
 import { supabase } from '../lib/supabaseClient';
+import { useUser } from '../hooks/useAuth';
 
 interface AvatarProps {
   url?: string;
   size: number;
   onUpload: (filePath: string) => void;
   storageBucket: string;
+  userId?: string;
 }
 
 export default function Avatar({
   url,
   size,
   onUpload,
-  storageBucket
+  storageBucket,
+  userId
 }: AvatarProps) {
   const [uploading, setUploading] = useState(false);
+  const { data: authUser } = useUser();
 
   async function uploadAvatar(event: React.ChangeEvent<HTMLInputElement>) {
     try {
@@ -65,14 +69,18 @@ export default function Avatar({
         <div style={{ height: size, width: size }} />
       )}
       <div style={{ width: size }}>
-        <label
-          htmlFor="single"
-          className={`block rounded p-2 text-center ${
-            uploading ? 'bg-gray-300' : 'cursor-pointer bg-blue-500 text-white'
-          }`}
-        >
-          {uploading ? 'Uploading...' : 'Upload Image'}
-        </label>
+        {authUser?.id === userId && (
+          <label
+            htmlFor="single"
+            className={`block rounded p-2 text-center ${
+              uploading
+                ? 'bg-gray-300'
+                : 'cursor-pointer bg-blue-500 text-white'
+            }`}
+          >
+            <>{uploading ? 'Uploading...' : 'Upload Image'}</>
+          </label>
+        )}
         <input
           type="file"
           id="single"

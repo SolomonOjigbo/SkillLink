@@ -120,7 +120,7 @@ const Navbar = () => {
         </div>
       </div>
       <div className="navbar-center">
-        <Link to="/" className="btn btn-ghost text-xl normal-case">
+        <Link to="/" className="btn btn-ghost text-3xl normal-case">
           SkillLink
         </Link>
       </div>

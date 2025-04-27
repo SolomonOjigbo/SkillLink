@@ -60,7 +60,7 @@ export function typedSelect<T extends TableName>(table: T) {
     > {
       const { data, error } = await supabase
         .from(table)
-        .select(columns)
+        .select(Array.isArray(columns) ? columns.join(',') : columns)
         .single();
 
       return handleSupabaseResponse({

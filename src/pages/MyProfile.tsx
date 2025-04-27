@@ -6,6 +6,7 @@ import { PageLoading } from '../components/utils/PageLoading';
 import { supabaseHelpers } from '../types/supabase.helpers';
 import { useUserSkills } from '../hooks/useSkills';
 import SkillCard from '../components/SkillCard';
+import { Link } from 'react-router-dom';
 
 export default function MyProfile() {
   const { data: authUser } = useUser();
@@ -84,9 +85,10 @@ export default function MyProfile() {
       {/* Profile Header */}
       <div className="mb-8 flex flex-col items-center">
         <Avatar
-          url={profile?.avatar_url}
-          size={100}
+          url={profile?.avatar_url || formData.avatar_url}
+          size={150}
           storageBucket="avatars"
+          userId={authUser?.id}
           onUpload={(url) => {
             setFormData((prev) => ({ ...prev, avatar_url: url }));
           }}
@@ -107,7 +109,7 @@ export default function MyProfile() {
               onChange={(e) =>
                 setFormData({ ...formData, full_name: e.target.value })
               }
-              className="w-full rounded border p-2"
+              className="w-full rounded border p-2 text-black"
             />
           </div>
           <div>
@@ -118,7 +120,7 @@ export default function MyProfile() {
               onChange={(e) =>
                 setFormData({ ...formData, username: e.target.value })
               }
-              className="w-full rounded border p-2"
+              className="w-full rounded border p-2  text-black"
               required
             />
           </div>
@@ -129,7 +131,7 @@ export default function MyProfile() {
           <textarea
             value={formData.bio}
             onChange={(e) => setFormData({ ...formData, bio: e.target.value })}
-            className="w-full rounded border p-2"
+            className="w-full rounded border p-2  text-black"
             rows={3}
           />
         </div>
@@ -142,7 +144,7 @@ export default function MyProfile() {
               onChange={(e) =>
                 setFormData({ ...formData, skills: e.target.value })
               }
-              className="w-full rounded border p-2"
+              className="w-full rounded border p-2  text-black"
               placeholder="List your skills separated by commas"
             />
           </div>
@@ -154,7 +156,7 @@ export default function MyProfile() {
               onChange={(e) =>
                 setFormData({ ...formData, location: e.target.value })
               }
-              className="w-full rounded border p-2"
+              className="w-full rounded border p-2  text-black"
               placeholder="Enter your location/city"
             />
           </div>
@@ -170,7 +172,7 @@ export default function MyProfile() {
 
       {/* Skills Section */}
       <div className="mt-12">
-        <h2 className="mb-4 text-xl font-bold">Your Skills</h2>
+        <h2 className="mb-4 text-xl font-bold">Your Skill Posts</h2>
         {skillsLoading ? (
           <PageLoading />
         ) : skills?.length ? (
@@ -180,7 +182,10 @@ export default function MyProfile() {
             ))}
           </div>
         ) : (
-          <p className="text-gray-500">You haven't posted any skills yet.</p>
+          <p className="text-gray-500">
+            You haven't posted any skills yet.{' '}
+            <Link to="/add-post">Post a Skill</Link>
+          </p>
         )}
       </div>
     </div>
